@@ -1,3 +1,0 @@
-#! /bin/sh
-
-cat data.json | crowdprocess io -p fft.js > results.json && node processResults.js

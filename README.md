@@ -16,7 +16,7 @@ FFTW-Emscripten
    
   `make run-c`
    or 
-  `make run-c ARGV = audioArray.txt`
+  `make run-c ARGV=audioArray.txt`
 
 ####Compile js code: 
   `make cp EMCC=path/to/emscripten/emcc`

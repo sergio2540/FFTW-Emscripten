@@ -1,6 +1,8 @@
 FFTW-Emscripten
 ===========
 
+FFTW compiled to JavaScript.
+
 ##Requirements:
   * [FFTW](https://github.com/FFTW/fftw3)
   * [Emscripten](https://github.com/kripken/emscripten/wiki/Tutorial)

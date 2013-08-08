@@ -125,9 +125,7 @@ function files_out(){
 
 function files_in() {
 	var input = io['input'] && io['input']['files'] || program.input;
-        console.dir(io['input'])
-        console.dir(io['input']['files'])
-        console.dir(input)
+        
 	var filesIn = [];
 
 	filesIn.push("if((data.input) && (data.input.files)){ \

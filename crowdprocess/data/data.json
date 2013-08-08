@@ -1,1 +1,9 @@
-["audioArray.txt","audioArray.txt","audioArray.txt","audioArray.txt","audioArray.txt"]
+[{ "input" : {
+		"argv" : "audioArray.txt"
+
+	   }
+},{ "input" : {
+		"argv" : "audioArray.txt"
+
+	   }
+}]

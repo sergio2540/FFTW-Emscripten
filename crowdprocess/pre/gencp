@@ -1,0 +1,169 @@
+#!/usr/bin/env node
+
+var glob = require('glob');
+var fs = require('fs');
+var program = require('commander');
+var split = require('split');
+var through = require('through');
+var path = require('path');
+
+var LZString = require('./LZString');
+
+
+function list(val) {
+ return val.split(',');
+}
+
+program.version('0.0.0')
+        .usage('[options] <file ...>')
+	.option('-io, --io <io.json>','io.json file')
+        .option('--input <files to setup in virtual fs>','list with files to setup in virtual fs',list)
+	.option('-emsc, --emscriptencode <emscriptecode.js>','compiled js from c')
+        .option('-dst, --destiny <file to write>','')
+        .parse(process.argv);
+        
+
+var io = path.normalize(program.io) || path.normalize('./io.json');
+
+
+try {
+    var ioJSON = fs.readFileSync('./io.json');
+} catch(e){
+
+
+    //TODO: melhorar as mensagens de erro
+    console.error(e);
+    process.exit(1);
+}
+
+try {
+    var io = JSON.parse(ioJSON);
+}catch(e){
+    console.error("Failed: var io = JSON.parse("+ioJSON+");");
+    console.error("Error parsing io.json");
+    process.exit(1);
+}
+
+
+var templateStream = fs.createReadStream("template.js");
+templateStream.setEncoding('utf8');
+//Fazer replace de program.destiny
+var programStream = fs.createWriteStream(program.destiny);
+
+templateStream.pipe(split())
+	.pipe(through(write))
+	.pipe(programStream);
+
+
+function write(line){
+	
+	
+
+	if(line.indexOf('{{{ARGS}}}') !== -1){
+			this.queue(argv() + '\n');	
+	}
+	else  if (line.indexOf('{{{FILES_IN}}}') !== -1){
+		this.queue(files_in()+ '\n');
+	}
+	else if (line.indexOf('{{{FILES_OUT}}}') !== -1){
+		this.queue(files_out() + '\n');
+	}
+	else if (line.indexOf('{{{GENERATED_CODE}}}') !== -1){
+		this.queue(generated_code() + '\n');
+
+	}else {
+		this.queue(line+'\n');
+	}
+	
+	
+
+}
+
+
+
+function argv(){
+	//ARGV
+	var arguments = (io['input'] && io['input']['argv']) || [];
+	var args = [];
+	arguments.forEach(function (arg) {
+		if (arg === "data.input.argv"){
+			args.push("Module['arguments'] = Module['arguments'].concat(" + arg + ");");
+		} else {
+			args.push("Module['arguments'] = Module['arguments'].concat('" + arg + "');");
+		}
+	    
+	});
+
+	return args.join('\n');
+}
+
+
+function files_out(){
+
+	var output = io['output'] && io['output']['files'] || [];
+
+	var out = [];
+
+	out.push("if((data.output) && (data.output.files)) { \
+				data.output.files.forEach(function(file) { \
+					Module['return']['files'][file.basename] = intArrayToString(FS.root.contents[file.dirname + file.basename].contents) \
+				}); \
+			}");
+
+	output = output.filter(function(file) { return file != "data.output.files"});
+
+	output.forEach(function(file) { 
+		//(file === "_.json") ? 
+		//out.push("Module['return']['files']['" + file + "'] = intArrayToString(FS.root.contents['" + file + "'].contents)"); :
+		//out.push("Module['return']['files']['" + file + "'] = LZString.compressToBase64(intArrayToString(FS.root.contents['" + file + "'].contents))");
+		out.push("Module['return']['files']['" + file + "'] = intArrayToString(FS.root.contents['" + file + "'].contents)");
+		
+	});
+
+	return out.join('\n');
+}
+
+function files_in() {
+	var input = io['input'] && io['input']['files'] || program.input;
+        console.dir(io['input'])
+        console.dir(io['input']['files'])
+        console.dir(input)
+	var filesIn = [];
+
+	filesIn.push("if((data.input) && (data.input.files)){ \
+				data.input.files.forEach(function(file) { \
+					Module['FS_createDataFile'](file.dirname,file.basename,LZString.decompressFromBase64(file.content.toString()),true,true); \
+				}); \
+			}");
+
+	input = input.filter(function(file) { return file != "data.input.files"});
+
+	var processInputFile =  function (file) {
+		//console.log(file)
+		//var name = Object.keys(file)[0];
+		//var content = file[name];
+		var data = fs.readFileSync(file,'utf8');
+		var compressedData = LZString.compressToBase64(data); 
+		var dirname = path.dirname(file);
+		var basename = path.basename(file);
+		filesIn.push("Module['FS_createDataFile']('"+ dirname +"', '"+ basename +"',LZString.decompressFromBase64('"+ compressedData +"'), true, true);");	
+	
+	};
+
+
+
+	input.forEach(function(inputFile){
+	 	var files = glob.sync(inputFile);
+		files.forEach(processInputFile);
+	});
+
+	return filesIn.join('\n');
+
+}
+
+function generated_code(){
+	var genetatedCode = fs.readFileSync(program.emscriptencode);
+	return genetatedCode;
+}
+
+

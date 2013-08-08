@@ -1,0 +1,27 @@
+{
+  "name": "pre",
+  "version": "0.0.0",
+  "description": "",
+  "main": "generateProgram.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "io.json",
+    "template.js",
+    "LZString.js"
+  ],
+  "author": "",
+  "license": "BSD",
+  "dependencies": {
+    "commander": "~2.0.0",
+    "glob": "~3.2.6",
+    "split": "~0.2.10",
+    "async": "~0.2.9"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt-shell": "~0.3.1"
+  }
+}

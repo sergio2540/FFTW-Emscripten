@@ -1,6 +1,9 @@
 {
-	"argv" : ["_.json"],
-	"input" : ["audioArray.txt"],	
+	
+	"input": { 
+			"argv" : ["data.input.argv"],
+			"files" : ["audioArray.txt"]
+		},	
 	"output" : []
 	
 }

@@ -1,0 +1,138 @@
+function Run(data){
+
+Module = {};
+Module['preRun'] = [];
+
+//OUTPUT
+Module['return'] = {};
+Module['return']['output'] = {};
+Module['return']['output']['files'] = {};
+Module['return']['output']['stdout'] = '';
+Module['return']['output']['stderr'] = '';
+
+//PATH CODE
+Module['dirname'] = function dirname(path){
+
+  return path.substring(0,path.lastIndexOf('/')+1);
+}
+
+Module['basename'] = function basename(path){
+
+  return path.substring(path.lastIndexOf('/')+1);
+}
+
+//COMPRESS CODE
+{{{program.compress}}}
+
+{{{#program.compress}}}
+Module['compress'] = module.exports.compress;
+Module['decompress'] = module.exports.decompress;
+{{{/program.compress}}}
+
+
+
+
+Module['preRun'].push(function () {
+
+if((data.input) && (data.input.files)){ 
+        var files = data.input.files;
+	files.forEach(function(file) {
+ 
+		var dirname = Module['dirname'](file.name);
+		var basename = Module['basename'](file.name);
+		
+	
+		var content = ((file.decompress) || (file.compress)) ? Module['decompress'](file.content) : file.content;
+		
+
+		Module['FS_createDataFile'](dirname,basename,content,true,true); 
+	}); 
+
+}
+	{{#program.data.input.files}}
+		
+		var dirname = Module['dirname'](Module['dirname']('{{{name}}}'));
+		var basename = Module['basename'](Module['basename']('{{{name}}}'));
+		
+		{{#compress}}
+		var content = Module['decompress']('{{{content}}}');
+		{{/compress}}
+		
+		{{^compress}}
+		var content = {{{content}}};
+		{{/compress}}
+		
+		Module['FS_createDataFile'](dirname,basename,content,true,true);
+	
+		
+	{{/program.data.input.files}}
+
+	Module['print'] = function(text){
+		Module['return']['output']['stdout'] += text + '\n';
+	};
+
+	Module['printErr'] = function(text){
+		Module['return']['output']['stderr'] += text + '\n';
+	};
+});
+
+//{{{GENERATED_CODE}}}
+
+//EMSCRIPTEN CODE
+{{{program.code}}}
+
+//ARGUMENTS
+Module['arguments'] = [];
+
+if((data.input) && (data.input.argv)){	
+	var argv = data.input.argv;
+	argv.forEach(function(arg){
+		Module['arguments'][arg.pos] = arg.arg;
+	});
+}
+
+
+{{#program.data.input.argv}}
+	Module['arguments'][{{{pos}}}] = '{{{arg}}}'; 
+{{/program.data.input.argv}}
+	
+
+Module.callMain(Module['arguments']);
+
+
+
+if((data.output) && (data.output.files)){
+        var files = data.output.files;
+	files.forEach(function(file) {
+   
+		var dirname = Module['dirname'](file.name);
+	
+		var basename = Module['basename'](file.name);
+		var content = intArrayToString(FS.root.contents[basename].contents);
+		content = ((file.compress) || (file.decompress)) ? Module['compress'](content) : content;
+
+		Module['return']['output']['files'][dirname + basename] =  content;
+    
+
+
+	}); 
+
+}
+
+
+{{#program.data.output.files}}
+
+var dirname = Module['dirname']('{{{name}}}');
+var basename = Module['basename']('{{{name}}}');
+{{#compress}}
+Module['return']['output']['files'][dirname + basename] = Module['compress'](intArrayToString(FS.root.contents[basename].contents)); 
+{{/compress}}
+
+{{^compress}}
+Module['return']['output']['files'][dirname + basename ] = intArrayToString(FS.root.contents[basename].contents);
+{{/compress}}
+
+{{/program.data.output.files}}
+
+return Module['return'];
+}

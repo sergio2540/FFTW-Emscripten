@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+
+var cppstream = require('../lib/cppstream')
+var program = require('commander');
+
+//CLI
+
+//STDIN view.json
+//STDOUT cp code
+
+program.version('0.0.0')
+    .usage('[options] <file ...>')
+	.option('-c, --compress <compress.js>','compress code file')
+	.option('-t, --template <template.mustache>','mustache template')
+    .parse(process.argv);
+
+
+var template = program.template;
+var compress = program.compress;
+
+process.stdin.pipe(cppstream(template,compress)).pipe(process.stdout);
+

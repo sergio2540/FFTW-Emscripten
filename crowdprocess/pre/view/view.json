@@ -1,0 +1,24 @@
+{ "program" : { 
+		 "code" : "./build/FFTWTest.js",
+		 "compress" : "./lib/LZString.js",
+		 "data" : [
+				{ "input" : { 
+			      "argv"  : [
+					{  "arg" : "audioArray.txt",
+					   "pos" : "0"
+					}
+					],
+			      "files" : [ {
+					    "name" : "/audioArray.txt",
+					    "content" : "../../audio/audioArray.txt"
+					  }
+					]
+			    },
+		  "output" : {
+				
+			     }
+			
+	     }]
+}
+}
+

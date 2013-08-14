@@ -1,0 +1,14 @@
+{ "program" : { 
+		 "code" : "./build/FFTWTest.js",
+		 "compress" : "./lib/LZString.js",
+		 "data" : [{ 
+				"input" : {
+					"argv"  : []
+				},
+				"output" : { 
+				    
+				    }
+			}]
+	}
+}
+

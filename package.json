@@ -1,0 +1,34 @@
+{
+  "name": "fftw-emscripten",
+  "version": "0.0.0",
+  "description": "FFTW compiled to JavaScript.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  
+  "bin" : { "gencpd" : "./crowdprocess/pre/bin/gencpd",
+            "gencpp" : "./crowdprocess/pre/bin/gencpp"
+	  },
+  "author": "Sérgio Alves",
+  "license": "BSD",
+  "repository" : { "type" : "git",
+   		   "url" : "https://github.com/sergio2540/FFTW-Emscripten"
+  },
+  "dependencies": {
+    "commander": "~2.0.0",
+    "glob": "~3.2.6",
+    "split": "~0.2.10",
+    "async": "~0.2.9",
+    "through": "~2.3.4",
+    "JSONStream": "~0.6.4",
+    "event-stream": "~3.0.16",
+    "levelup": "~0.13.0",
+    "leveldown": "~0.7.0",
+    "mustache": "~0.7.2"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt-shell": "~0.3.1"
+  }
+}

@@ -1,6 +1,8 @@
 var fs = require('fs');
-var path = require('path')
-var results = require(path.normalize(process.argv[2]));
+var path = require('path');
+var JSONStream = require('JSONStream');
+var es = require('event-stream');
+
 
 // Copyright (c) 2013 Pieroxy <pieroxy@pieroxy.net>
 // This work is free. You can redistribute it and/or modify it
@@ -665,28 +667,34 @@ console.log(out); err && console.log(err);
 fs.mkdirSync('./resultsFolder');
 process.chdir('./resultsFolder');
 
+var results = require(path.normalize(process.argv[2]));
 var i=1;
 var totalTime = 0;
-results.forEach(function(obj){
-	
-	fs.mkdirSync('./'+i);
-	process.chdir('./'+i);
-	
-	for(key in obj){
-		if ((key == "stdout") || (key == "stder")){
-			fs.writeFileSync(key,LZString.decompressFromBase64(obj[key]));
-		}
-   
-		else {
-			var files = obj[key];
-			 for(key in files)
-				fs.writeFileSync(key,LZString.decompressFromBase64(files[key]));
 
-		}
-	}
-	process.chdir('..');
-	i++;
-});
+es.pipeline(process.stdin,
+	    JSONStream.parse(),
+	    es.map(function(obj,callback) {
+		results.forEach(function(obj){
+	
+			fs.mkdirSync('./'+i);
+			process.chdir('./'+i);
+	
+			for(key in obj){
+				if ((key == "stdout") || (key == "stder")){
+					fs.writeFileSync(key,LZString.decompressFromBase64(obj[key]));
+				}
+		   
+				else {
+					var files = obj[key];
+					 for(key in files)
+						fs.writeFileSync(key,LZString.decompressFromBase64(files[key]));
+
+				}
+			}
+			process.chdir('..');
+			i++;
+		});
+	   }));
 
 
 

@@ -12,7 +12,7 @@ CROWDPROCESS_DIR= ./crowdprocess
 CC = cc
 
 #Flags to C compiler
-CFLAGS=-O2 
+CFLAGS=-O1
 
 #libc: lib compiled with gcc
 LIBC= $(C_DIR)/lib/libfftw3.a
@@ -35,7 +35,7 @@ EMCC=path/to/emscripten/emcc
 #Flags for emscripten C compiler
 #-O<optimization level>
 #See: https://github.com/kripken/emscripten/wiki/Optimizing-Code
-EMCCFLAGS=-O0
+EMCCFLAGS=-O2
 
 #Various compiling-to-JS parameters.
 #See https://github.com/kripken/emscripten/blob/master/src/settings.js
@@ -61,6 +61,11 @@ RESULTS_DIR= $(CROWDPROCESS_DIR)/results
 
 all: c cp
 
+install:
+	sudo npm install -g https://github.com/CrowdProcess/program-editor/archive/master.tar.gz
+	sudo npm install -g crowdprocess-cli
+	sudo npm install -g
+
 c: 
 	mkdir -p $(C_DIR)/build/;
 	cd $(C_DIR); \
@@ -74,23 +79,26 @@ run-c:
 
 cp:
 	mkdir -p $(CROWDPROCESS_DIR)/build
-	cp -r $(AUDIOARRAY) $(CROWDPROCESS_DIR)/pre/; \
+	mkdir -p $(CROWDPROCESS_DIR)/data
+	mkdir -p $(CROWDPROCESS_DIR)/pre/build
 	cd $(C_DIR) && \
-	$(EMCC) $(EMCCFLAGS) $(SOURCES) ../$(CROWDPROCESS_DIR)/$(LIBJS) $(SETTINGS) -o ../$(CROWDPROCESS_DIR)/pre/$(EXEC).js 
-	cd $(CROWDPROCESS_DIR)/pre/; \
-	./gencp --io io.json --emscriptencode ./$(EXEC).js --destiny ../build/$(EXEC).js; \
-	rm -f ./audioArray.txt
+	$(EMCC) $(EMCCFLAGS) $(SOURCES) ../$(CROWDPROCESS_DIR)/$(LIBJS) $(SETTINGS) -o ../$(CROWDPROCESS_DIR)/pre/build/$(EXEC).js
+	cd $(CROWDPROCESS_DIR)/pre/ &&\
+	cat ./data/data.json | gencpd --compress ./lib/LZString > ../$(DATA) && \
+	cat ./view/view.json | gencpp --template ./template/template.mustache > ../build/$(EXEC).js
 
 run-editor:
 	@program-editor -p $(CROWDPROCESS_DIR)/build/$(EXEC).js
+
 clean:
 	rm -rf $(C_DIR)/build
-	rm -rf $(JS_DIR)/build
 	rm -rf $(CROWDPROCESS_DIR)/build
+	rm -rf $(CROWDPROCESS_DIR)/data
+	rm -rf $(CROWDPROCESS_DIR)/pre/build
 
 
 #!!!!not tested!!!!
-run-io: cp io process-results
+run-io: io process-results
 
 #!!!!not tested!!!!
 process-results:

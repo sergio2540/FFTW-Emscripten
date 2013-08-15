@@ -11,7 +11,7 @@ function process_file(file,callback){
 
 	var filename = file.content;
 	
-	fs.readFile(filename,'utf8',function(err,data){
+	fs.readFile(filename,'binary',function(err,data){
 		if(err){
 			callback(err); //eachcallback
 		}

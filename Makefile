@@ -62,9 +62,8 @@ RESULTS_DIR= $(CROWDPROCESS_DIR)/results
 all: c cp
 
 install:
-	sudo npm install -g https://github.com/CrowdProcess/program-editor/archive/master.tar.gz
-	sudo npm install -g crowdprocess-cli
-	sudo npm install -g
+	mkdir -p $(C_DIR)/lib/
+	cd ./fftw3/ && ./configure && make && make install
 
 c: 
 	mkdir -p $(C_DIR)/build/;

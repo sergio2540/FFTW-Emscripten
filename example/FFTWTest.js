@@ -7435,7 +7435,6 @@ if((data.input) && (data.input.argv)){
 }
 
 
-	Module['arguments'][0] = 'audioArray.txt'; 
 	
 
 Module.callMain(Module['arguments']);

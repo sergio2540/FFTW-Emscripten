@@ -4,9 +4,6 @@
 		 "data" : [
 				{ "input" : { 
 			      "argv"  : [
-					{  "arg" : "audioArray.txt",
-					   "pos" : "0"
-					}
 					],
 			      "files" : [ {
 					    "name" : "/audioArray.txt",

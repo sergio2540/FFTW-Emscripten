@@ -43,19 +43,6 @@ FFTW example compiled to JavaScript.
   make run-c ARGV=audioArray.txt
 ```
 
-###Generate libfftw3 with [emscripten](https://github.com/kripken/emscripten/):
-
-```bash   
-  wget http://fftw.org/fftw-3.3.3.tar.gz
-  tar -xvf fftw-3.3.3.tar.gz
-  cd fftw-3.3.3
-  path/to/emscripten/emconfigure ./configure --disable-fortran --libdir=../crowdprocess/lib
-  path/to/emscripten/emmake make
-  path/to/emscripten/emmake make install
-```
-
-######See:[Building projects](https://github.com/kripken/emscripten/wiki/Building-Projects)
-
 ###Compile js code: 
 
 ```bash 
@@ -81,3 +68,16 @@ FFTW example compiled to JavaScript.
 ```
 
 #####See: [Makefile](https://github.com/sergio2540/FFTW-Emscripten/blob/master/Makefile)
+
+###Generate libfftw3 with [emscripten](https://github.com/kripken/emscripten/):
+
+```bash   
+  wget http://fftw.org/fftw-3.3.3.tar.gz
+  tar -xvf fftw-3.3.3.tar.gz
+  cd fftw-3.3.3
+  path/to/emscripten/emconfigure ./configure --disable-fortran --libdir=../crowdprocess/lib
+  path/to/emscripten/emmake make
+  path/to/emscripten/emmake make install
+```
+
+######See:[Building projects](https://github.com/kripken/emscripten/wiki/Building-Projects) and [crowdprocess/lib](https://github.com/sergio2540/FFTW-Emscripten/tree/master/crowdprocess/lib)

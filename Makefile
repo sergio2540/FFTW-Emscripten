@@ -90,7 +90,7 @@ run-editor:
 	@program-editor -p $(CROWDPROCESS_DIR)/build/$(EXEC).js
 
 run-example:
-	cd ./example && node example.js && less stdout
+	cd ./example && node FFTWTest.js && less stdout
 
 clean:
 	rm -rf $(C_DIR)/build

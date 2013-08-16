@@ -79,7 +79,7 @@ FFTW example compiled to JavaScript.
   wget http://fftw.org/fftw-3.3.3.tar.gz
   tar -xvf fftw-3.3.3.tar.gz
   cd fftw-3.3.3
-  path/to/emscripten/emconfigure ./configure --disable-fortran --libdir=../crowdprocess/lib
+  path/to/emscripten/emconfigure ./configure --disable-fortran --libdir=absolute/path/to/crowdprocess/lib
   path/to/emscripten/emmake make
   path/to/emscripten/emmake make install
 ```

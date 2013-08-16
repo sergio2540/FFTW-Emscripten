@@ -29,14 +29,29 @@ FFTW example compiled to JavaScript.
   make install
 ```
 
-####Compile c code: 
-  `make c CC=gcc LIBC=path/to/libfftw3`
+###Compile c code: 
+
+```bash 
+   make c CC=gcc LIBC=path/to/libfftw3
+```
  
-####Run c code: 
-   
-  `make run-c`
-   or 
-  `make run-c ARGV=audioArray.txt`
+###Run c code: 
+
+```bash   
+  make run-c
+  make run-c ARGV=audioArray.txt
+```
+
+###Generate libfftw3 with [emscripten](https://github.com/kripken/emscripten/):
+
+```bash   
+  wget http://fftw.org/fftw-3.3.3.tar.gz
+  tar -xvf fftw-3.3.3.tar.gz
+  cd fftw-3.3.3
+  path/to/emscripten/emconfigure ./configure --disable-fortran --libdir=../crowdprocess/lib
+  path/to/emscripten/emmake make
+  path/to/emscripten/emmake make install
+```
 
 ###Compile js code: 
 

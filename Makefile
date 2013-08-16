@@ -35,7 +35,7 @@ EMCC=path/to/emscripten/emcc
 #Flags for emscripten C compiler
 #-O<optimization level>
 #See: https://github.com/kripken/emscripten/wiki/Optimizing-Code
-EMCCFLAGS=-O2
+EMCCFLAGS=-O1
 
 #Various compiling-to-JS parameters.
 #See https://github.com/kripken/emscripten/blob/master/src/settings.js
@@ -48,11 +48,11 @@ SETTINGS= -s BUILD_AS_WORKER=1 -s ASMJS=1 -s INVOKE_RUN=0
  
 #1arg: audio array filename
 
-ARGV= "audioArray.txt"
+ARGV="audioArray.txt"
 
 #Audio array 
 
-AUDIOARRAY= ./audio/audioArray.txt
+AUDIOARRAY=./audio/audioArray.txt
 
 
 DATA= ./data/data.json
@@ -89,11 +89,15 @@ cp:
 run-editor:
 	@program-editor -p $(CROWDPROCESS_DIR)/build/$(EXEC).js
 
+run-example:
+	cd ./example && node example.js && less stdout
+
 clean:
 	rm -rf $(C_DIR)/build
 	rm -rf $(CROWDPROCESS_DIR)/build
 	rm -rf $(CROWDPROCESS_DIR)/data
 	rm -rf $(CROWDPROCESS_DIR)/pre/build
+	rm -rf $(CROWDPROCESS_DIR)/example/stdout
 
 
 #!!!!not tested!!!!

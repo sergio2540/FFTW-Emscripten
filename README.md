@@ -1,7 +1,7 @@
 FFTW-Emscripten
 ===========
 
-FFTW compiled to JavaScript.
+FFTW example compiled to JavaScript.
 
 ##Requirements:
 

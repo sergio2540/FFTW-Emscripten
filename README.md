@@ -17,6 +17,7 @@ FFTW example compiled to JavaScript.
   
 #####See: [template.mustache](https://github.com/sergio2540/FireSim-Emscripten/blob/master/crowdprocess/pre/template/template.mustache)
 
+ * [Building projects with emscripten](https://github.com/kripken/emscripten/wiki/Building-Projects)
  * [HOWTO: Port a C/C++ Library to JavaScript (xml.js)@blog.mozakai](http://mozakai.blogspot.pt/2012/03/howto-port-cc-library-to-javascript.html)
  * [FFTW docs](http://www.fftw.org/fftw3_doc/)
 

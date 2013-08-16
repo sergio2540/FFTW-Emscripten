@@ -42,7 +42,11 @@ FFTW example compiled to JavaScript.
   make run-c
   make run-c ARGV=audioArray.txt
 ```
+###Run js example: 
 
+```bash
+  make run-example
+```
 ###Compile js code: 
 
 ```bash 

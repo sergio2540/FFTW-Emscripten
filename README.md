@@ -53,6 +53,8 @@ FFTW example compiled to JavaScript.
   path/to/emscripten/emmake make install
 ```
 
+######See:[Building projects](https://github.com/kripken/emscripten/wiki/Building-Projects)
+
 ###Compile js code: 
 
 ```bash 

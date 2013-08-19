@@ -34,7 +34,7 @@ FFTW example compiled to JavaScript.
 ###Compile c code: 
 
 ```bash 
-   make c CC=gcc LIBC=path/to/libfftw3
+   make c CC=gcc
 ```
  
 ###Run c code: 

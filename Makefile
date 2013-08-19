@@ -15,7 +15,7 @@ CC = cc
 CFLAGS=-O1
 
 #libc: lib compiled with gcc
-LIBC= $(C_DIR)/lib/libfftw3.a
+LIBC=./lib/libfftw3.a
 
 #Libjs: lib compiled with emscripten
 LIBJS= $(JS_DIR)/lib/libfftw3.a
@@ -68,7 +68,7 @@ install:
 c: 
 	mkdir -p $(C_DIR)/build/;
 	cd $(C_DIR); \
-	$(CC) $(CFLAGS) $(SOURCES) -o build/$(EXEC) $(LIBC)
+	$(CC) $(CFLAGS) $(SOURCES) -o build/$(EXEC) $(LIBC) -lm
 	
 run-c:
 	cp -r $(AUDIOARRAY) $(C_DIR)/build; \

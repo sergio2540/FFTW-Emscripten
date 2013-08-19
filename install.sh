@@ -8,6 +8,6 @@ tar -xvf fftw-3.3.3.tar.gz
 cd fftw-3.3.3 
 mkdir -p ./c/lib/ 
 ./configure --disable-fortran --libdir=`readlink -f ../c/lib/`
-make
-make install
+sudo make
+sudo make install
 cd ..

@@ -34,7 +34,7 @@ FFTW example compiled to JavaScript.
 ###Compile c code: 
 
 ```bash 
-   make c CC=gcc
+   make c CC=cc
 ```
  
 ###Run c code: 

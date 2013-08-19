@@ -26,6 +26,7 @@ FFTW example compiled to JavaScript.
 ###Install: 
 
 ```bash
+  git clone https://github.com/sergio2540/FFTW-Emscripten.git
   cd ./FFTW-Emscripten
   make install
 ```

@@ -1,0 +1,11 @@
+.git*
+c
+audio
+emscripten
+example
+crowdprocess/lib
+crowdprocess/build
+crowdprocess/data
+crowdprocess/results
+
+

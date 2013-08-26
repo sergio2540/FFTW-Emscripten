@@ -3,6 +3,10 @@ c
 audio
 emscripten
 example
+fftw-3.3.3
+.*
+Makefile
+install.sh
 crowdprocess/lib
 crowdprocess/build
 crowdprocess/data

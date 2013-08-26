@@ -87,7 +87,7 @@ cp:
 	cat ./view/view.json | gencpp --template ./template/template.mustache > ../build/$(EXEC).js
 
 run-editor:
-	@program-editor -p $(CROWDPROCESS_DIR)/build/$(EXEC).js
+	reagenzglas -p $(CROWDPROCESS_DIR)/build/$(EXEC).js
 
 run-example:
 	cd ./example && node FFTWTest.js && less stdout

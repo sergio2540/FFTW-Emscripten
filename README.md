@@ -7,7 +7,7 @@ FFTW example compiled to JavaScript.
 
   * [FFTW](https://github.com/FFTW/fftw3)
   * [Emscripten](https://github.com/kripken/emscripten/wiki/Tutorial)
-  * [program-editor](https://github.com/crowdprocess/program-editor)
+  * [crp-reagenzglas](https://github.com/CrowdProcess/crp-reagenzglas)
   * [crowdprocess-cli](https://github.com/CrowdProcess/crp-cli)
 
 ##Recommended reading:
@@ -62,7 +62,7 @@ FFTW example compiled to JavaScript.
 
 ######See: [Explain crowdprocess/view/data](https://gist.github.com/sergio2540/fac873fccde43bb98b44)
        
-###Run js with [program-editor](https://github.com/crowdprocess/program-editor): 
+###Run js with [crp-reagenzglas](https://github.com/CrowdProcess/crp-reagenzglas): 
 
 ```bash
    make run-editor

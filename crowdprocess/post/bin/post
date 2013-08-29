@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+var poststream = require('../lib/poststream');
+
+process.stdin.pipe(poststream());
+
+
+
+
+
+
+

@@ -54,7 +54,7 @@ ARGV="audioArray.txt"
 
 AUDIOARRAY=./audio/audioArray.txt
 
-
+RESULTS= ./results/results.json
 DATA= ./data/data.json
 
 RESULTS_DIR= $(CROWDPROCESS_DIR)/results
@@ -100,15 +100,18 @@ clean:
 	rm -rf $(CROWDPROCESS_DIR)/example/stdout
 
 
-#!!!!not tested!!!!
+
 run-io: io process-results
 
-#!!!!not tested!!!!
-process-results:
-	node post/processResults.js $(RESULTS_DIR)/results.json
 io:
 	mkdir -p $(RESULTS_DIR)
-	@cat $(CROWDPROCESS_DIR)/$(DATA) | crowdprocess io -p $(CROWDPROCESS_DIR)/build/$(EXEC).js > $(RESULTS_DIR)/results.json
+	cat $(CROWDPROCESS_DIR)/$(DATA) | crowdprocess io -p $(CROWDPROCESS_DIR)/build/$(EXEC).js > $(RESULTS_DIR)/results.json
+
+process-results:
+	rm -rf $(RESULTS_DIR)/post
+	mkdir  $(RESULTS_DIR)/post
+	cd $(RESULTS_DIR)/post && \
+	cat ../results.json | post 
 
 
 

@@ -5,14 +5,16 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  
-  "bin" : { "gencpd" : "./crowdprocess/pre/bin/gencpd",
-            "gencpp" : "./crowdprocess/pre/bin/gencpp"
-	  },
+  "bin": {
+    "gencpd": "./crowdprocess/pre/bin/gencpd",
+    "gencpp": "./crowdprocess/pre/bin/gencpp",
+    "post": "./crowdprocess/post/bin/post"
+  },
   "author": "Sérgio Alves",
   "license": "BSD",
-  "repository" : { "type" : "git",
-   		   "url" : "https://github.com/sergio2540/FFTW-Emscripten"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sergio2540/FFTW-Emscripten"
   },
   "dependencies": {
     "commander": "~2.0.0",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-watch": "~0.5.1",
-    "grunt-shell": "~0.3.1"
+    "grunt-shell": "~0.3.1",
+    "tape": "~1.0.4"
   }
 }

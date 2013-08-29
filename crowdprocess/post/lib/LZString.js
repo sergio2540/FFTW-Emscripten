@@ -1,11 +1,5 @@
-var fs = require('fs');
-var path = require('path');
-var JSONStream = require('JSONStream');
-var es = require('event-stream');
-
-
 // Copyright (c) 2013 Pieroxy <pieroxy@pieroxy.net>
-// This work is free. You can redistribute it and/or modify it
+// this work is free. You can redistribute it and/or modify it
 // under the terms of the WTFPL, Version 2
 // For more information see LICENSE.txt or http://www.wtfpl.net/
 //
@@ -13,8 +7,8 @@ var es = require('event-stream');
 // http://pieroxy.net/blog/pages/lz-string/testing.html
 //
 // LZ-based compression algorithm, version 1.3.0
+
 var LZString = {
-  
 
   // private property
   _keyStr : "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
@@ -661,42 +655,5 @@ var LZString = {
 };
 
 
-var exec = require('child_process').exec,child;
-child = exec('rm -rf ./resultsFolder',function(err,out) { 
-console.log(out); err && console.log(err); 
-fs.mkdirSync('./resultsFolder');
-process.chdir('./resultsFolder');
-
-var results = require(path.normalize(process.argv[2]));
-var i=1;
-var totalTime = 0;
-
-es.pipeline(process.stdin,
-	    JSONStream.parse(),
-	    es.map(function(obj,callback) {
-		results.forEach(function(obj){
-	
-			fs.mkdirSync('./'+i);
-			process.chdir('./'+i);
-	
-			for(key in obj){
-				if ((key == "stdout") || (key == "stder")){
-					fs.writeFileSync(key,LZString.decompressFromBase64(obj[key]));
-				}
-		   
-				else {
-					var files = obj[key];
-					 for(key in files)
-						fs.writeFileSync(key,LZString.decompressFromBase64(files[key]));
-
-				}
-			}
-			process.chdir('..');
-			i++;
-		});
-	   }));
-
-
-
-});
-
+module.exports.compress = LZString.compressToBase64.bind(LZString);
+module.exports.decompress = LZString.decompressFromBase64.bind(LZString);

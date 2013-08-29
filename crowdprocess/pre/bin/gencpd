@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 var cpdstream = require('../lib/cpdstream');
-var es = require('event-stream');
 var program = require('commander');
 
 
@@ -12,8 +11,7 @@ program.version('0.0.0')
 
 
 var compress = program.compress;
+var cpd = cpdstream(compress);
 
-es.pipeline(process.stdin,
-	    cpdstream(compress),
-	    process.stdout);
+process.stdin.pipe(cpd).pipe(process.stdout);
 
